@@ -17,11 +17,13 @@ public class TransactionRegister {
     @Column(name="TRANSACTION_REGISTER_KEY")
     private long transactionRegisterKey;
 
-    @Column(name="FROM_ACCOUNT_ID")
-    private long fromAccountId;
-
-    @Column(name="TO_ACCOUNT_ID")
-    private long toAccountId;
+//    @OneToOne(mappedBy="accountKey")
+//    @Column(name="FROM_ACCOUNT_KEY")
+//    private Account fromAccountKey;
+//
+//    @OneToOne(mappedBy="accountKey")
+//    @Column(name="TO_ACCOUNT_KEY")
+//    private Account toAccountKey;
 
     @Column(name="TIMESTAMP")
     private LocalDate timestamp;
@@ -29,19 +31,24 @@ public class TransactionRegister {
     @Column(name="TRANSACTION_TYPE")
     private TransactionType transactionType;
 
-    public TransactionRegister(long fromAccountId, long toAccountId, LocalDate timestamp, TransactionType transactionType) {
-        this.fromAccountId = fromAccountId;
-        this.toAccountId = toAccountId;
+    public TransactionRegister(Account fromAccountKey, Account toAccountKey, LocalDate timestamp, TransactionType transactionType) {
+//        this.fromAccountKey = fromAccountKey;
+//        this.toAccountKey = toAccountKey;
         this.timestamp = timestamp;
         this.transactionType = transactionType;
+    }
+
+    public TransactionRegister(Account fromAccount){
+
+        //this.fromAccountKey = fromAccount;
     }
 
     @Override
     public String toString() {
         return "TransactionRegister{" +
                 "transactionRegisterKey=" + transactionRegisterKey +
-                ", fromAccountId=" + fromAccountId +
-                ", toAccountId=" + toAccountId +
+//                ", fromAccountKey=" + fromAccountKey +
+//                ", toAccountKey=" + toAccountKey +
                 ", timestamp=" + timestamp +
                 ", transactionType=" + transactionType +
                 '}';

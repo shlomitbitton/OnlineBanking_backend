@@ -9,21 +9,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class LoginController {
 
     @Autowired
     public LoginService loginService;
 
     @PostMapping(path="/login")
-    public String login(@RequestBody String username, String password, Model model){
+    public void login(@RequestBody String username, String password, Model model){
           LoginRequest loginRequest = new LoginRequest();
           loginRequest.setPassword(password);
           loginRequest.setUsername(username);
         if(loginService.isValidUser(username, password)){
             model.addAttribute(loginRequest);
         }
-        return "login.html";
+       // return "login.html";
     }
 }
