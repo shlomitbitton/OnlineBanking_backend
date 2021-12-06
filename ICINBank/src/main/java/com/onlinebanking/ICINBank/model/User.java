@@ -41,6 +41,9 @@ public class User {
     private int pin;
 
 
+    public User() {
+    }
+
     public User(String firstName, String lastName, List<Account> accounts, String email, String phone, String username, int pin) {
         this.firstName = firstName;
         this.lastName = lastName;
