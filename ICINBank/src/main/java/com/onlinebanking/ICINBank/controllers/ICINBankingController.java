@@ -37,7 +37,7 @@ public class ICINBankingController {
         }
     }
 
-    @GetMapping(path="/allTransactions")
+        @GetMapping(path="/allTransactions")
     public Iterable<TransactionRegister> transactionList(@RequestBody long accountId, LocalDate date){
         return iCINBankingService.getAllTransactionsByAccountKey(accountId);
     }
@@ -48,9 +48,9 @@ public class ICINBankingController {
     }
 
     @GetMapping(path="/userAccounts/{userKey}")
-    public Iterable<Account>  getUserAccountsList(@PathVariable("userKey") long user){
+    public ArrayList<Account>  getUserAccountsList(@PathVariable("userKey") String user){
         try{
-            return iCINBankingService.getAllAccountsByUser(user);
+            return iCINBankingService.findAllAccountsByUserKey(Long.valueOf(user));
         }catch(Exception e){
             System.out.println("trying to fetch accounts for user" + e.getMessage());
         }

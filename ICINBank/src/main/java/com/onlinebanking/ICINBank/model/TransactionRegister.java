@@ -19,11 +19,11 @@ public class TransactionRegister {
 
 
     @ManyToOne
-    @JoinColumn(name="FROM_ACCOUNT", nullable=false, updatable=false)
+//    @JoinColumn(name="FROM_ACCOUNT", nullable=false, updatable=false)
     private Account fromAccount;
 
     @ManyToOne
-    @JoinColumn(name="TO_ACCOUNT", nullable=false, updatable=false)
+//    @JoinColumn(name="TO_ACCOUNT", nullable=false, updatable=false)
     private Account toAccount;
 
     @Column(name="TIMESTAMP")

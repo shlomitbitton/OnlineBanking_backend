@@ -22,7 +22,8 @@ public class User {
     @Column(name="LAST_NAME")
     private String lastName;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="userKey")
     private List<Account> accounts;
 
     @Column(name="EMAIL")

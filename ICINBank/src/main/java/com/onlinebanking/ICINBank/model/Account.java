@@ -18,16 +18,17 @@ public class Account {
     private long accountKey;
 
     @ManyToOne
-    @JoinColumn(name="USER", nullable=false, updatable=false)
     private User user;
 
     @Column(name="BALANCE")
     private int balance;
 
-    @OneToMany(mappedBy = "fromAccount")
+    @OneToMany
+    @JoinColumn(name="fromAccount")
     private List<TransactionRegister> listOfFromTransactions;
 
-    @OneToMany(mappedBy = "toAccount")
+    @OneToMany
+    @JoinColumn(name="toAccount")
     private List<TransactionRegister> listOfToTransactions;
 
     @Column(name="ACCOUNT_TYPE")
@@ -37,7 +38,7 @@ public class Account {
     }
 
     public Account(User accountHolderUser, int balance, AccountType accountType) {
-       // this.accountHolderUser = accountHolderUser;
+        this.user = accountHolderUser;
         this.balance = balance;
         this.accountType = accountType;
     }

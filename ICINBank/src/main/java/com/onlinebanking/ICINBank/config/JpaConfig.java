@@ -17,7 +17,7 @@ public class JpaConfig {
     public DataSource getDataSource() throws SQLException {
         return
         DataSourceBuilder.create()
-                        .driverClassName("com.mysql.jdbc.Driver")
+                        .driverClassName("com.mysql.cj.jdbc.Driver")
                         .url("jdbc:mysql://localhost:3306/onlinebanking")
                         .username("onlinebankinguser")
                         .password("password")
