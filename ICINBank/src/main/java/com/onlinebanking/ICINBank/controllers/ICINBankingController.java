@@ -7,8 +7,6 @@ import com.onlinebanking.ICINBank.model.TransactionRegister;
 import com.onlinebanking.ICINBank.model.User;
 import com.onlinebanking.ICINBank.service.ICINBankingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +39,7 @@ public class ICINBankingController {
         }
     }
 
-        @GetMapping(path="/allTransactions")
+    @GetMapping(path="/allTransactions")
     public Iterable<TransactionRegister> transactionList(@RequestBody long accountId, LocalDate date){
         return iCINBankingService.getAllTransactionsByAccountKey(accountId);
     }
@@ -51,8 +49,12 @@ public class ICINBankingController {
         return iCINBankingService.getUserList();
     }
 
-    @GetMapping(path="/userAccounts/{userKey}")
-    @Transactional(value = "jpaTransactionManager")
+    @GetMapping(path="/allAccounts")
+    public Iterable<Account> accountList(){
+        return iCINBankingService.getAccountList();
+    }
+
+    @GetMapping(path="/users/{userKey}")
     @ResponseBody
     public List<AccountDto> getUserAccountsList(@PathVariable("userKey") String user){
         try{

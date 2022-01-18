@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class ICINBankingServiceImpl implements ICINBankingService{
@@ -53,6 +55,11 @@ public class ICINBankingServiceImpl implements ICINBankingService{
     }
 
     @Override
+    public Iterable<Account> getAccountList() {
+        return accountRepository.findAll();
+    }
+
+    @Override
     public Iterable<TransactionRegister> getAllTransactionsByAccountKey(long accountId){
         return accountRepository.findListOfTransactionsByAccountKey(accountId);
     }
@@ -60,12 +67,9 @@ public class ICINBankingServiceImpl implements ICINBankingService{
 
     @Override
     public  List<AccountDto> findAllAccountsByUserKey(long userKey) {
-        List<AccountDto> accountDtoList = new ArrayList<AccountDto>();
+        List<AccountDto> accountDtoList;
         List<Long> listOfAccounts = accountRepository.findAllAccountsByUserKey(userKey);
-        for (int i = 1; i < listOfAccounts.size()-1; i++) {
-            AccountDto dto  = this.getDtoByAccountId((long) i);
-            accountDtoList.add(dto);
-        }
+        accountDtoList = IntStream.range(1, listOfAccounts.size() + 1).mapToObj(i -> this.getDtoByAccountId((long) i)).collect(Collectors.toList());
         return accountDtoList;
     }
 
