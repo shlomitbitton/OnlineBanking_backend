@@ -1,16 +1,16 @@
 package com.onlinebanking.ICINBank.controllers;
 
 import com.onlinebanking.ICINBank.dto.AccountDto;
+import com.onlinebanking.ICINBank.dto.TransactionRegisterDto;
 import com.onlinebanking.ICINBank.model.Account;
 import com.onlinebanking.ICINBank.model.LoginRequest;
-import com.onlinebanking.ICINBank.model.TransactionRegister;
 import com.onlinebanking.ICINBank.model.User;
 import com.onlinebanking.ICINBank.service.ICINBankingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +21,7 @@ public class ICINBankingController {
     @Autowired
     public ICINBankingService iCINBankingService;
 
-
-
-//    @GetMapping("/accounts")
-//    public void getListOfAccount(@RequestBody long userKey){
-//        User user = userService.getUserByUserKey(userKey);
-//        accountService.getAllAccountsByUser(user.getUserKey());
-//    }
+    
 
     @PostMapping(path="/login")
     public void login(@RequestBody String username, String password, Model model){
@@ -40,8 +34,13 @@ public class ICINBankingController {
     }
 
     @GetMapping(path="/allTransactions")
-    public Iterable<TransactionRegister> transactionList(@RequestBody long accountId, LocalDate date){
-        return iCINBankingService.getAllTransactionsByAccountKey(accountId);
+    public List<TransactionRegisterDto> transactionList(@Param("toAccount")long toAccount, @Param("fromAccount")long fromAccount){
+        try{
+            return iCINBankingService.getAllTransactionsByAccountKey(toAccount, fromAccount);
+        }catch(Exception e){
+            System.out.println("Unable to fetch transactions for account " + toAccount+ "and " + " "+ fromAccount + " "+e.getMessage());
+        }
+        return new ArrayList<>();
     }
 
     @GetMapping(path="/allUsers")
@@ -58,10 +57,9 @@ public class ICINBankingController {
     @ResponseBody
     public List<AccountDto> getUserAccountsList(@PathVariable("userKey") String user){
         try{
-            //return iCINBankingService.findAllAccountsByUserKey(Long.parseLong(user));
             return iCINBankingService.getUserAccountsList(Long.parseLong(user));
         }catch(Exception e){
-            System.out.println("trying to fetch accounts for user " + user+ " "+ e.getMessage());
+            System.out.println("Unable to fetch accounts for user " + user+ " "+ e.getMessage());
         }
        return new ArrayList<>();
     }

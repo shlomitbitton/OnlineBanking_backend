@@ -1,7 +1,6 @@
 package com.onlinebanking.ICINBank.repository;
 
 import com.onlinebanking.ICINBank.model.Account;
-import com.onlinebanking.ICINBank.model.TransactionRegister;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +13,6 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-    public Iterable<TransactionRegister> findListOfTransactionsByAccountKey(long accountKey);
 
     @Transactional(readOnly=true)
     @Query(value= "SELECT ac.account_type, ac.balance  FROM account ac WHERE"

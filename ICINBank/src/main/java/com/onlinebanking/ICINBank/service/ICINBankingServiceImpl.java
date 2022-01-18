@@ -1,6 +1,7 @@
 package com.onlinebanking.ICINBank.service;
 
 import com.onlinebanking.ICINBank.dto.AccountDto;
+import com.onlinebanking.ICINBank.dto.TransactionRegisterDto;
 import com.onlinebanking.ICINBank.enums.AccountType;
 import com.onlinebanking.ICINBank.model.Account;
 import com.onlinebanking.ICINBank.model.TransactionRegister;
@@ -65,16 +66,31 @@ public class ICINBankingServiceImpl implements ICINBankingService{
     }
 
     @Override
-    public Iterable<TransactionRegister> getAllTransactionsByAccountKey(long accountId){
-        return accountRepository.findListOfTransactionsByAccountKey(accountId);
+    public List<TransactionRegisterDto> getAllTransactionsByAccountKey(long toAccount, long fromAccount){
+        List<Long> listOfTransactions = transactionRegisterRepository.findListOfTransactionsByAccountKey(toAccount,fromAccount);
+        List<TransactionRegisterDto> transactionRegisterDtoList = new ArrayList<TransactionRegisterDto>();
+        IntStream.range(1, listOfTransactions.size() + 1).mapToObj(i -> this.setTransactionRegisterDtoByTransactionId((long) i)).collect(Collectors.toList());
+
+        return transactionRegisterDtoList;
+    }
+
+    @Transactional
+    private  TransactionRegisterDto setTransactionRegisterDtoByTransactionId(Long accountId) { //add the secong from account check
+        Optional<TransactionRegister> transactionRegister = transactionRegisterRepository.findById(accountId);
+        TransactionRegisterDto transactionRegisterDto = new TransactionRegisterDto();
+        transactionRegisterDto.setAmount(transactionRegister.get().getAmount());
+        transactionRegisterDto.setTimestamp(transactionRegister.get().getTimestamp());
+        transactionRegisterDto.setTransactionType(transactionRegister.get().getTransactionType().getType());
+        transactionRegisterDto.setToAccount(accountRepository.findById(accountId).get().getAccountKey());
+        transactionRegisterDto.setFromAccount(accountRepository.findById(accountId).get().getAccountKey());
+        return transactionRegisterDto;
     }
 
 
     @Override
     public  List<AccountDto> findAllAccountsByUserKey(long userKey) {
-        List<AccountDto> accountDtoList;
         List<Long> listOfAccounts = accountRepository.findAllAccountsByUserKey(userKey);
-        accountDtoList = IntStream.range(1, listOfAccounts.size() + 1).mapToObj(i -> this.getDtoByAccountId((long) i)).collect(Collectors.toList());
+        List<AccountDto> accountDtoList = IntStream.range(1, listOfAccounts.size() + 1).mapToObj(i -> this.getDtoByAccountId((long) i)).collect(Collectors.toList());
         return accountDtoList;
     }
 
