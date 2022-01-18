@@ -3,6 +3,7 @@ package com.onlinebanking.ICINBank.model;
 import com.onlinebanking.ICINBank.enums.AccountType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,8 +18,8 @@ public class Account {
     @Column(name="ACCOUNT_KEY")
     private long accountKey;
 
-    @ManyToOne
-    private User user;
+//    @ManyToOne
+//    private User user;
 
     @Column(name="BALANCE")
     private int balance;
@@ -38,7 +39,7 @@ public class Account {
     }
 
     public Account(User accountHolderUser, int balance, AccountType accountType) {
-        this.user = accountHolderUser;
+       // this.user = accountHolderUser;
         this.balance = balance;
         this.accountType = accountType;
     }

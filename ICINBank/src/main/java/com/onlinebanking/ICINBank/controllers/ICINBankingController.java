@@ -1,16 +1,20 @@
 package com.onlinebanking.ICINBank.controllers;
 
+import com.onlinebanking.ICINBank.dto.AccountDto;
 import com.onlinebanking.ICINBank.model.Account;
 import com.onlinebanking.ICINBank.model.LoginRequest;
 import com.onlinebanking.ICINBank.model.TransactionRegister;
 import com.onlinebanking.ICINBank.model.User;
 import com.onlinebanking.ICINBank.service.ICINBankingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
@@ -48,11 +52,13 @@ public class ICINBankingController {
     }
 
     @GetMapping(path="/userAccounts/{userKey}")
-    public ArrayList<Account>  getUserAccountsList(@PathVariable("userKey") String user){
+    @Transactional(value = "jpaTransactionManager")
+    @ResponseBody
+    public List<AccountDto> getUserAccountsList(@PathVariable("userKey") String user){
         try{
-            return iCINBankingService.findAllAccountsByUserKey(Long.valueOf(user));
+            return iCINBankingService.findAllAccountsByUserKey(Long.parseLong(user));
         }catch(Exception e){
-            System.out.println("trying to fetch accounts for user" + e.getMessage());
+            System.out.println("trying to fetch accounts for user " + user+ " "+ e.getMessage());
         }
        return new ArrayList<>();
     }

@@ -1,5 +1,6 @@
 package com.onlinebanking.ICINBank.service;
 
+import com.onlinebanking.ICINBank.dto.AccountDto;
 import com.onlinebanking.ICINBank.model.Account;
 import com.onlinebanking.ICINBank.model.TransactionRegister;
 import com.onlinebanking.ICINBank.model.User;
@@ -14,7 +15,7 @@ public interface ICINBankingService {
 
     public Iterable<TransactionRegister> transactionList(@RequestBody long accountId, LocalDate date);
     public Iterable<TransactionRegister> getAllTransactionsByAccountKey(long accountId);
-    public ArrayList<Account> findAllAccountsByUserKey(long userKey);
+    public List<AccountDto> findAllAccountsByUserKey(long userKey);
     public Iterable<User> getUserList();
     public boolean isValidUser(String username, String password);
 }

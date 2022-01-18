@@ -1,5 +1,7 @@
 package com.onlinebanking.ICINBank.service;
 
+import com.onlinebanking.ICINBank.dto.AccountDto;
+import com.onlinebanking.ICINBank.enums.AccountType;
 import com.onlinebanking.ICINBank.model.Account;
 import com.onlinebanking.ICINBank.model.TransactionRegister;
 import com.onlinebanking.ICINBank.model.User;
@@ -7,13 +9,14 @@ import com.onlinebanking.ICINBank.repository.AccountRepository;
 import com.onlinebanking.ICINBank.repository.TransactionRegisterRepository;
 import com.onlinebanking.ICINBank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ICINBankingServiceImpl implements ICINBankingService{
@@ -51,13 +54,28 @@ public class ICINBankingServiceImpl implements ICINBankingService{
 
     @Override
     public Iterable<TransactionRegister> getAllTransactionsByAccountKey(long accountId){
-        Iterable<TransactionRegister> listOfTransactions= accountRepository.findListOfTransactionsByAccountKey(accountId);
-        return listOfTransactions;
+        return accountRepository.findListOfTransactionsByAccountKey(accountId);
     }
 
+
     @Override
-    public ArrayList<Account> findAllAccountsByUserKey(long userKey) {
-        return accountRepository.findAllAccountsByUserKey(userKey);
+    public  List<AccountDto> findAllAccountsByUserKey(long userKey) {
+        List<AccountDto> accountDtoList = new ArrayList<AccountDto>();
+        List<Long> listOfAccounts = accountRepository.findAllAccountsByUserKey(userKey);
+        for (int i = 1; i < listOfAccounts.size()-1; i++) {
+            AccountDto dto  = this.getDtoByAccountId((long) i);
+            accountDtoList.add(dto);
+        }
+        return accountDtoList;
+    }
+
+    @Transactional
+    private  AccountDto getDtoByAccountId(Long accountId) {
+        Optional<Account> account = accountRepository.findById(accountId);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setAccountType(account.get().getAccountType().getType());
+        accountDto.setBalance(account.get().getBalance());
+        return accountDto;
     }
 
     @Override
