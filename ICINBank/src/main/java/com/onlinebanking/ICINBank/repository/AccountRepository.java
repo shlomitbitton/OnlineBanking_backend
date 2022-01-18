@@ -17,7 +17,7 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     public Iterable<TransactionRegister> findListOfTransactionsByAccountKey(long accountKey);
 
     @Transactional(readOnly=true)
-    @Query(value= "SELECT ac.account_key, ac.account_type, ac.balance  FROM account ac WHERE"
+    @Query(value= "SELECT ac.account_type, ac.balance  FROM account ac WHERE"
            + " ac.user_key =:userKey",nativeQuery = true)
     List<Long> findAllAccountsByUserKey(@Param("userKey")long userKey);
 }

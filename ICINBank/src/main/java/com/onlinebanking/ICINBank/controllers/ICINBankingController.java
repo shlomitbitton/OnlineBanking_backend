@@ -54,11 +54,12 @@ public class ICINBankingController {
         return iCINBankingService.getAccountList();
     }
 
-    @GetMapping(path="/users/{userKey}")
+    @GetMapping(path="/users/{userKey}/accounts")
     @ResponseBody
     public List<AccountDto> getUserAccountsList(@PathVariable("userKey") String user){
         try{
-            return iCINBankingService.findAllAccountsByUserKey(Long.parseLong(user));
+            //return iCINBankingService.findAllAccountsByUserKey(Long.parseLong(user));
+            return iCINBankingService.getUserAccountsList(Long.parseLong(user));
         }catch(Exception e){
             System.out.println("trying to fetch accounts for user " + user+ " "+ e.getMessage());
         }

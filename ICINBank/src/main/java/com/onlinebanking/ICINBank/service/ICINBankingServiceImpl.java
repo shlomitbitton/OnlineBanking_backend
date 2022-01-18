@@ -45,6 +45,11 @@ public class ICINBankingServiceImpl implements ICINBankingService{
         return false;
     }
 
+    @Override
+    public List<AccountDto> getUserAccountsList(long userKey) {
+        return findAllAccountsByUserKey(userKey);
+    }
+
     private User getUserByUserKey(long userKey){
         return userRepository.getUserByUserKey(userKey);
     }

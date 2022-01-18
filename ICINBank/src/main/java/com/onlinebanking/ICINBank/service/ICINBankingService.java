@@ -19,4 +19,6 @@ public interface ICINBankingService {
     public Iterable<User> getUserList();
     public Iterable<Account> getAccountList();
     public boolean isValidUser(String username, String password);
+
+    List<AccountDto> getUserAccountsList(long userKey);
 }
