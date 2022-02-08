@@ -5,5 +5,8 @@ INSERT INTO user (USER_KEY, FIRST_NAME, LAST_NAME, PASSWORD, EMAIL, PHONE, PIN, 
   (5, 'David', 'Cohen', 'password','shlomit@test.com',  111111111, 3333, 'username');
 insert into transaction_register ( transaction_register_key,from_account, to_account , transaction_type,timestamp, amount ) values (2, 2,1,1, '2022-01-01',200);
 insert into account (account_key, account_type, balance, user_key) values(3,0, 50000,4);
-
+insert into account (account_key, account_type, balance, user_key) values(1,2, 55000,4);
+insert into account (account_key, account_type, balance, user_key) values(2,0, 50000,4);
+insert into account (account_key, account_type, balance, user_key) values(2,0, 50000,2);
+insert into account (account_key, account_type, balance, user_key) values(2,0, 50000,2);
  --insert into  user_accounts   ( user_user_key ,  accounts_account_key ) values(1, 1);

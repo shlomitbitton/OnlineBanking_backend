@@ -14,6 +14,6 @@ public interface TransactionRegisterRepository extends CrudRepository<Transactio
 
     @Transactional(readOnly=true)
     @Query(value= "SELECT tr.from_account, tr.to_account, tr.amount, tr.transaction_type, tr.timestamp  FROM transaction_register tr WHERE"
-            + " tr.to_account =:toAccount",nativeQuery = true)
-    public List<Long> findListOfTransactionsByAccountKey(@Param("toAccount")long toAccount, @Param("fromAccount")long fromAccount);
+            + " tr.to_account =:toAccount or tr.to_account =:fromAccount",nativeQuery = true)
+    List<Long> findListOfTransactionsByAccountKey(@Param("toAccount")long toAccount, @Param("fromAccount")long fromAccount);
 }

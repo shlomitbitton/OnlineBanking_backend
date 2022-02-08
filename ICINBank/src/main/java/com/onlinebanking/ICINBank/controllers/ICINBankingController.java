@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="http://localhost:4200/api")
 @RestController
 public class ICINBankingController {
 
     @Autowired
     public ICINBankingService iCINBankingService;
 
-    
+
 
     @PostMapping(path="/login")
     public void login(@RequestBody String username, String password, Model model){
