@@ -19,7 +19,7 @@ public class LoginTest {
 
         @Test
         public void checkIfUserCanLogin() throws Exception {
-            assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
+            assertThat(this.restTemplate.getForObject("http://172.31.12.234:" + port + "/",
                     String.class)).contains("Login");
         }
 

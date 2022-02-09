@@ -18,7 +18,7 @@ public class JpaConfig {
         return
         DataSourceBuilder.create()
                         .driverClassName("com.mysql.cj.jdbc.Driver")
-                        .url("jdbc:mysql://localhost:3306/onlinebanking")
+                        .url("jdbc:mysql://172.31.12.234:3306/onlinebanking")
                         .username("onlinebankinguser")
                         .password("password")
                         .build();
