@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins="http://172.31.12.234:4200/api")
+@CrossOrigin(origins="http://localhost:4200/api")
 @RestController
 public class ICINBankingController {
 
